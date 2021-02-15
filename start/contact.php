@@ -8,6 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	}
 	if ($post['email'] === ''){
 		$error['email'] = 'blank';
+	}else if (!filter_var($post['email'],FILTER_VALIDATE_EMAIL)){
+		$error['email'] = 'email';
 	}
 	if ($post['contact'] === ''){
 		$error['contact'] = 'blank';
@@ -54,8 +56,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 						<p class="require_item">必須</p>
 					</div>
 					<div class="col-8">
-						<input type="email" name="email" id="inputEmail" class="form-control" required>
-						<p class="error_msg"></p>
+						<input type="email" name="email" id="inputEmail" class="form-control" value="<?php echo htmlspecialchars($post['email']);?>" required>
+						<?php if ($error['email'] === 'blank'): ?>
+							<p class="error_msg">※mailaddressをご記入下さい</p>
+						<?php endif; ?>
+						<?php if ($error['email'] === 'email'): ?>
+							<p class="error_msg">※mailaddressを正しくご記入下さい</p>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div>
@@ -68,8 +75,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 						<p class="require_item">必須</p>
 					</div>
 					<div class="col-8">
-						<textarea name="contact" id="inputContent" rows="10" class="form-control" required></textarea>
-						<p class="error_msg"></p>
+						<textarea name="contact" id="inputContent" rows="10" class="form-control" required><?php echo htmlspecialchars($post['contact']); ?></textarea>
+						<?php if ($error['contact'] === 'blank'): ?>
+							<p class="error_msg">※お問い合わせ内容をご記入下さい</p>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div>
