@@ -14,6 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	if ($post['contact'] === ''){
 		$error['contact'] = 'blank';
 	}
+	if (count($error) === 0){
+		header('Location: confirmation.php');
+	}
 }
 ?>
 <!DOCTYPE html>
