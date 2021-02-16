@@ -1,4 +1,5 @@
 <?php 
+session_start();
 $error = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -15,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 		$error['contact'] = 'blank';
 	}
 	if (count($error) === 0){
+		$_SESSION['form'] = $post;
 		header('Location: confirmation.php');
 	}
 }
