@@ -18,6 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	if (count($error) === 0){
 		$_SESSION['form'] = $post;
 		header('Location: confirmation.php');
+		exit();
+	}
+}else{
+	if (isset($_SESSION['form'])) {
+		$post = $_SESSION['form'];
 	}
 }
 ?>

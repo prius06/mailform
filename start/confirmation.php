@@ -1,7 +1,30 @@
 <?php 
 	session_start();
 
-	$post = $_SESSION['form'];
+	if (!isset($_SESSION['form'])){
+		header('Location: contact.php');
+		exit();
+	}else{
+		$post = $_SESSION['form'];
+	}
+	
+	if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+		$to = 'me@exanlpe.co.jp';
+		$from = $post['email'];
+		$subject = 'お問合わせが届きました';
+		$body = <<<EOT
+		名前: {$post['name']}
+		メールアドレス：{$post['email']}
+		内容：
+		{$post['contact']}
+		EOT;
+			// var_dump($body);
+			// exit();
+			// mb_send_mail($to,$subject,$$body,"From: {$from}");
+			unset($_SESSION['form']);
+			header('Location: finish.html');
+			exit();
+	}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -51,7 +74,7 @@
 			</div>
 			<div class="row">
 				<div class="col-9 offset-3">
-					<a href="./contact.html">戻る</a>
+					<a href="contact.php">戻る</a>
 					<button type="submit">送信する</button>
 				</div>
 			</div>
